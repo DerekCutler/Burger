@@ -1,0 +1,37 @@
+{
+  "name": "burger",
+  "version": "1.0.0",
+  "description": "A burger logger with MySQL, Node, Express, Handlebars and a homemade ORM.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DerekCutler/Burger.git"
+  },
+  "keywords": [
+    "burger",
+    "logger",
+    "with",
+    "MySQL",
+    "Node",
+    "Express",
+    "Handlebars",
+    "and",
+    "a",
+    "homemade",
+    "ORM"
+  ],
+  "author": "Derek Cutler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DerekCutler/Burger/issues"
+  },
+  "homepage": "https://github.com/DerekCutler/Burger#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "mysql": "^2.16.0"
+  }
+}
