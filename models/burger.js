@@ -1,88 +1,29 @@
-// ==========================================
-// IMPORT THE OBJECT-RELATIONAL MAPPING
-// ==========================================
-var orm = require('../config/orm.js');
-// ==========================================
+// Import the ORM to create functions that will interact with the database.
+var orm = require("../config/orm.js");
 
-
-// ==========================================
-// EXPORT THE OBJECT-RELATIONAL MAPPING
-// ==========================================
-module.exports = {
-    allBurgers   : burgers,
-    create       : create,
-    singleBurger : singleBurger,
-    update       : update
+var burger = {
+  all: function(cb) {
+    orm.all("burgers", function(res) {
+      cb(res);
+    });
+  },
+  // The variables cols and vals are arrays.
+  create: function(cols, vals, cb) {
+    orm.create("burgers", cols, vals, function(res) {
+      cb(res);
+    });
+  },
+  update: function(objColVals, condition, cb) {
+    orm.update("burgers", objColVals, condition, function(res) {
+      cb(res);
+    });
+  },
+  delete: function(condition, cb) {
+    orm.delete("burgers", condition, function(res) {
+      cb(res);
+    });
+  }
 };
-// ==========================================
 
-
-// ==========================================
-// GET ALL BURGERS
-// ==========================================
-function burgers(callBack) {
-    var object = {};
-    uneatenBurgers(function(data) {
-        object.uneaten = data;
-        eatenBurgers(function(data) {
-            object.eaten = data;
-            callBack(object);
-        });
-    });
-}
-// ==========================================
-
-
-// ==========================================
-// QUERY DATABASE FOR UNEATEN BURGERS
-// ==========================================
-function uneatenBurgers(callBack) {
-    orm.selectScoped('burgers', 'devoured', 'false', function(data) {
-        callBack(data);
-    });
-}
-// ==========================================
-
-
-// ==========================================
-// QUERY DATABASE FOR EATEN BURGERS
-// ==========================================
-function eatenBurgers(callBack) {
-    orm.selectScoped('burgers', 'devoured', 'true', function(data) {
-        callBack(data);
-    });
-}
-// ==========================================
-
-
-// ==========================================
-// QUERY DATABASE FOR SINGLE BURGER
-// ==========================================
-function singleBurger(burger, callBack) {
-    orm.selectOne('burgers', burger, function(data) {
-        callBack(data);
-    });
-}
-// ==========================================
-
-
-// ==========================================
-// QUERY DATABASE TO CREATE A BURGER
-// ==========================================
-function create(burger, callBack) {
-    orm.insertOne('burgers', 'burger_name', burger, function() {
-        callBack();
-    });
-}
-// ==========================================
-
-
-// ==========================================
-// QUERY DATABASE TO UPDATE A BURGER
-// ==========================================
-function update(burger, callBack) {
-    orm.updateOne('burgers', 'devoured', true, burger, function() {
-        callBack();
-    });
-}
-// ==========================================
+// Export the database functions for the controller (burgers_controller.js).
+module.exports = burger;

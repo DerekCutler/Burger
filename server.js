@@ -1,40 +1,29 @@
-// ==========================================
-// DEPENDENCIES
-// ==========================================
-var express = require('express');
-var methodOverride = require('method-override');
-var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
-// ==========================================
+var express = require("express");
 
-// ==========================================
-// SERVER SETUP
-// ==========================================
+var PORT = process.env.PORT || 8080;
+
 var app = express();
-var port = process.env.PORT || 3000;
-app.listen(port);
-console.log("Server listening on: http://localhost:" + PORT);
-// ==========================================
 
-// ==========================================
-// HANDLEBARS SETUP
-// ==========================================
-app.engine('handlebars', exphbs({
-    defaultLayout: 'main'
-}));
-app.set('view engine', 'handlebars');
-// ==========================================
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
 
-// ==========================================
-// ROUTES SETUP
-// ==========================================
-app.use(express.static(__dirname + '/public'));
+// Parse application body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+// Set Handlebars.
+var exphbs = require("express-handlebars");
 
-app.use(methodOverride('_method'));
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-require('./controllers/burger_controller.js')(app);
-// ==========================================
+// Import routes and give the server access to them.
+var routes = require("./controllers/burgers_controller.js");
+
+app.use(routes);
+
+// Start our server so that it can begin listening to client requests.
+app.listen(PORT, function() {
+  // Log (server-side) when our server has started
+  console.log("Server listening on: http://localhost:" + PORT);
+});

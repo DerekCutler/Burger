@@ -1,31 +1,44 @@
-<div class="row">
-    <div class="col-xs-6">
-        <ul class="list-group">
-            {{#each uneatenBurgers}}
-                <li class="list-group-item">
-                    {{ id }}. {{ burger_name }}
-                    <button type="submit" form="hidden-form{{id}}" class="btn btn-primary btn-sm pull-right devour">Devour</button>
-                </li>
-                <form action="/{{id}}?_method=PUT" method="POST" id="hidden-form{{id}}" class="hidden-xs-up"></form>
-            {{/each}}
-        </ul>
-    </div>
+<div class="container-fluid px-0">
+  <div class="row-sm-12 mb-5 text-center mt-5">
+    <h1>Mm-hmm! This is a...</h1>
+    <img src="/assets/img/burger.png" class="" alt="Burger">
+  </div>
 
-    <div class="col-xs-6">
-        <ul class="list-group">
-            {{#each eatenBurgers}}
-                <li class="list-group-item">{{ id }}. {{ burger_name }}</li>
-            {{/each}}
-        </ul>
-    </div>
-</div>
+  <div class="row mb-5 mx-5">
+    <hr>
+    <div id="uneaten" class="col-md-6 mx-auto text-center bg-light py-3">
+      <h1 class="mb-5 border-bottom">Tasty burgers that have not yet been devoured...</h1>
 
-<div class="row text-center">
-    <h2>Add Burger</h2>
-
-    <form method="POST" action="/" class="form">
-        <div class="form-group">
-            <input type="text" name="burger" class="form-control"></input>
+      {{#each burgers}}
+      <hr>
+      {{#unless devoured}}
+      <form action="" method="">
+        <div class="mb-3">
+          <p class="d-inline-block pr-3 burgers">{{burger_name}}</p>
+          <button id="{{id}}" class="btn btn-warning devour">Eat it!</button><br>
         </div>
-        <button type="submit" class="btn btn-success btn-block">Save</button>
+      </form>
+      {{/unless}}
+      {{/each}}
+      <hr><br>
+    </div>
+    <div class="col-md-6 mx-auto text-center  bg-light py-3">
+      <h1 class="mb-5 border-bottom">Tasty burgers that were...</h1>
+      {{#each burgers}}
+
+      {{#if devoured}}
+      <p class="burgers">{{burger_name}}</p>
+      {{/if}}
+      {{/each}}
+      <hr><br>
+    </div>
+  </div>
+  <div class="row-sm-12 mb-5 text-center mx-5">
+    <form action="" method="">
+      <div class="form-group">
+        <input id="newBurger" class="form-control" type="text" name="burger" placeholder="What's your favorite burger?">
+      </div>
+      <button id="submit" class="btn btn-info">Add it to the list</button>
     </form>
+  </div>
+</div>
